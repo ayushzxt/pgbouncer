@@ -1,0 +1,2 @@
+; Copy to userlist.txt and set your real PostgreSQL password
+"postgres" "change-me"

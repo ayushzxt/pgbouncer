@@ -1,0 +1,14 @@
+# Profile "pgbouncer": routes every pool through PgBouncer (docker, port 6432)
+# instead of connecting to PostgreSQL directly on 5432.
+# Only jdbc-url is overridden; everything else comes from application.yml.
+# Activate with: --spring.profiles.active=pgbouncer
+app:
+  datasources:
+    hikaricp-1:
+      jdbc-url: jdbc:postgresql://localhost:6432/hikaricp-1
+    hikaricp-2:
+      jdbc-url: jdbc:postgresql://localhost:6432/hikaricp-2
+    hikaricp-3:
+      jdbc-url: jdbc:postgresql://localhost:6432/hikaricp-3
+    dbfour:
+      jdbc-url: jdbc:postgresql://localhost:6432/dbfour

@@ -1,0 +1,39 @@
+# Every entry under app.datasources becomes a HikariDataSource bean named
+# after its key. Keys are HikariCP property names (kebab-case), so every
+# Hikari setting is available; unknown keys fail startup.
+# Driver-specific settings go under data-source-properties.
+# Secrets: use ${ENV_VAR} or ${ENV_VAR:default}.
+app:
+  # Optional: marks one pool @Primary so Boot's single-DataSource
+  # auto-config (JdbcTemplate, JdbcClient, transactions) targets it.
+  primary-datasource: orders-db
+  datasources:
+    orders-db:
+      jdbc-url: jdbc:h2:mem:ordersdb;DB_CLOSE_DELAY=-1
+      username: sa
+      password: ""
+      maximum-pool-size: 5
+      minimum-idle: 1
+    reporting-db:
+      jdbc-url: jdbc:h2:mem:reportingdb;DB_CLOSE_DELAY=-1
+      username: sa
+      password: ""
+      maximum-pool-size: 3
+      minimum-idle: 1
+      idle-timeout: 900000
+#   payments-db:
+#     jdbc-url: jdbc:postgresql://payments-db.internal:5432/payments
+#     username: app_user
+#     password: ${PAYMENTS_DB_PASSWORD}
+#     maximum-pool-size: 20
+#     data-source-properties:
+#       ssl: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics
+  endpoint:
+    health:
+      show-details: always

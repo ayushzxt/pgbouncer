@@ -1,0 +1,46 @@
+# Every entry under app.datasources becomes a HikariDataSource bean named
+# after its key. Keys are HikariCP property names (kebab-case), so every
+# Hikari setting is available; unknown keys fail startup.
+# Driver-specific settings go under data-source-properties.
+# Secrets: use ${ENV_VAR} or ${ENV_VAR:default}.
+# The pool key is also the name accepted by GET /api/{dbName}/employees.
+app:
+  # Optional: marks one pool @Primary so Boot's single-DataSource
+  # auto-config (JdbcTemplate, JdbcClient, transactions) targets it.
+  primary-datasource: hikaricp-1
+  datasources:
+    hikaricp-1:
+      jdbc-url: jdbc:postgresql://localhost:5432/hikaricp-1
+      username: ${DB_USERNAME:postgres}
+      password: ${DB_PASSWORD:root}
+      maximum-pool-size: 5
+      minimum-idle: 5
+    hikaricp-2:
+      jdbc-url: jdbc:postgresql://localhost:5432/hikaricp-2
+      username: ${DB_USERNAME:postgres}
+      password: ${DB_PASSWORD:root}
+      maximum-pool-size: 5
+      minimum-idle: 5
+    hikaricp-3:
+      jdbc-url: jdbc:postgresql://localhost:5432/hikaricp-3
+      username: ${DB_USERNAME:postgres}
+      password: ${DB_PASSWORD:root}
+      maximum-pool-size: 5
+      minimum-idle: 5
+    dbfour:
+      jdbc-url: jdbc:postgresql://localhost:5432/dbfour
+      username: ${DB_USERNAME:postgres}
+      password: ${DB_PASSWORD:root}
+      maximum-pool-size: 5
+      minimum-idle: 5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics
+  endpoint:
+    health:
+      show-details: always
+
+spring.profiles.active: pgbouncer

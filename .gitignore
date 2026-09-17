@@ -1,0 +1,41 @@
+# Build output
+target/
+*.class
+*.jar
+*.war
+*.log
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+dependency-reduced-pom.xml
+
+# Eclipse / STS
+.classpath
+.project
+.settings/
+.factorypath
+.apt_generated/
+.sts4-cache/
+bin/
+
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# VS Code
+.vscode/
+
+# Copilot app-modernization tooling state
+.github/modernize/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local secrets: PgBouncer user/password file
+pgbouncer/userlist.txt
+
+# Local env overrides
+.env
+application-local.yml
