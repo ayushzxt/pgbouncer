@@ -1,0 +1,25 @@
+# Same as direct.yml, except the JDBC URL points at PgBouncer (port 6432, transaction
+# pooling) instead of Postgres directly. Everything else — pool sizes, timeouts,
+# instance count — is identical, so PgBouncer is the only variable being tested.
+server:
+  port: 9101
+
+app:
+  primary-datasource: hikaricp-1
+  datasources:
+    hikaricp-1:
+      jdbc-url: jdbc:postgresql://127.0.0.1:6432/hikaricp-1
+      username: postgres
+      password: root
+      maximum-pool-size: 8
+      minimum-idle: 2
+      connection-timeout: 3000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics
+  endpoint:
+    health:
+      show-details: always
