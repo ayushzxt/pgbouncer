@@ -1,0 +1,32 @@
+07:07:54.305 total_connections=19
+07:07:55.412 total_connections=31
+psql: error: connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+07:07:56.463 total_connections=
+psql: error: connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+07:07:57.505 total_connections=
+psql: error: connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+07:07:58.550 total_connections=
+psql: error: connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+07:07:59.602 total_connections=
+psql: error: connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+07:08:00.647 total_connections=
+psql: error: connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+07:08:01.694 total_connections=
+psql: error: connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+07:08:02.736 total_connections=
+psql: error: connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+07:08:03.778 total_connections=
+psql: error: connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+07:08:04.824 total_connections=
+psql: error: connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+connection to server at "127.0.0.1", port 5432 failed: FATAL:  sorry, too many clients already
+07:08:05.878 total_connections=

@@ -1,0 +1,54 @@
+This is ApacheBench, Version 2.3 <$Revision: 1903618 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 300 requests
+Completed 600 requests
+Completed 900 requests
+Completed 1200 requests
+Completed 1500 requests
+Completed 1800 requests
+Completed 2100 requests
+Completed 2400 requests
+Completed 2700 requests
+Completed 3000 requests
+Finished 3000 requests
+
+
+Server Software:        
+Server Hostname:        localhost
+Server Port:            9103
+
+Document Path:          /api/hikaricp-1/employees
+Document Length:        468 bytes
+
+Concurrency Level:      60
+Time taken for tests:   12.232 seconds
+Complete requests:      3000
+Failed requests:        0
+Keep-Alive requests:    0
+Total transferred:      1719000 bytes
+HTML transferred:       1404000 bytes
+Requests per second:    245.25 [#/sec] (mean)
+Time per request:       244.649 [ms] (mean)
+Time per request:       4.077 [ms] (mean, across all concurrent requests)
+Transfer rate:          137.23 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.2      0       2
+Processing:    13  238 171.0    184    1219
+Waiting:       11  228 169.5    174    1161
+Total:         13  238 171.0    184    1220
+
+Percentage of the requests served within a certain time (ms)
+  50%    184
+  66%    250
+  75%    310
+  80%    362
+  90%    481
+  95%    604
+  98%    711
+  99%    801
+ 100%   1220 (longest request)

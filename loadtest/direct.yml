@@ -1,0 +1,28 @@
+# Standalone config for the PgBouncer PoC load test — direct to Postgres (port 5432).
+# Loaded via --spring.config.location=file:loadtest/direct.yml, which REPLACES the
+# default application.yml entirely, so only this one small pool exists per instance.
+# maximum-pool-size=8 / minimum-idle=2 means each instance idles at 2 real connections
+# but will try to grow to 8 under concurrent load — exactly what a small Kubernetes
+# replica of this service would do in production.
+server:
+  port: 9001
+
+app:
+  primary-datasource: hikaricp-1
+  datasources:
+    hikaricp-1:
+      jdbc-url: jdbc:postgresql://127.0.0.1:5432/hikaricp-1
+      username: postgres
+      password: root
+      maximum-pool-size: 8
+      minimum-idle: 2
+      connection-timeout: 3000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics
+  endpoint:
+    health:
+      show-details: always

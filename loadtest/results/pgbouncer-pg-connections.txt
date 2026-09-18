@@ -1,0 +1,12 @@
+07:09:11.716 postgres_server_connections=8
+07:09:12.817 postgres_server_connections=9
+07:09:13.896 postgres_server_connections=10
+07:09:14.992 postgres_server_connections=10
+07:09:16.058 postgres_server_connections=12
+07:09:17.122 postgres_server_connections=12
+07:09:18.199 postgres_server_connections=13
+07:09:19.272 postgres_server_connections=13
+07:09:20.340 postgres_server_connections=13
+07:09:21.429 postgres_server_connections=13
+07:09:22.485 postgres_server_connections=14
+07:09:23.555 postgres_server_connections=14
