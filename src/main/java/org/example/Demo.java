@@ -22,9 +22,14 @@ class Demo implements CommandLineRunner {
         System.out.println("Registered pools: " + pools.keySet());
 
         pools.forEach((name, ds) -> {
-            var mx = ((HikariDataSource) ds).getHikariPoolMXBean();
-            System.out.printf("[%s] active=%d idle=%d total=%d%n",
-                    name, mx.getActiveConnections(), mx.getIdleConnections(), mx.getTotalConnections());
+            if (ds instanceof HikariDataSource hikari) {
+                var mx = hikari.getHikariPoolMXBean();
+                System.out.printf("[%s] active=%d idle=%d total=%d%n",
+                        name, mx.getActiveConnections(), mx.getIdleConnections(), mx.getTotalConnections());
+            } else {
+                System.out.printf("[%s] unpooled (%s): a new connection per request%n",
+                        name, ds.getClass().getSimpleName());
+            }
         });
     }
 }

@@ -1,0 +1,2964 @@
+{
+  "meta": {
+    "pg_max_connections": 25,
+    "pg_superuser_reserved": 5,
+    "pg_app_ceiling": 20,
+    "work_ms": 50,
+    "concurrencies": [
+      10,
+      25,
+      50,
+      100,
+      200
+    ],
+    "duration_s": 12.0,
+    "warmup_s": 3.0,
+    "hikari_connection_timeout_ms": 5000,
+    "hikari_minimum_idle": 2,
+    "started": "2026-09-20 14:43:54"
+  },
+  "runs": [
+    {
+      "id": "S1-direct-noPool-1inst",
+      "scenario": "S1 direct (no pool)",
+      "label": "PostgreSQL direct, no connection pool, 1 instance",
+      "instances": 1,
+      "pooling": "none",
+      "hikari": null,
+      "pgbouncer": null,
+      "pool_vs_pg": "n/a",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 1687,
+          "success": 1687,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 140.6,
+          "success_rps": 140.6,
+          "latency_ms": {
+            "mean": 71.5,
+            "p50": 69.8,
+            "p95": 85.2,
+            "p99": 94.7,
+            "max": 118.5
+          },
+          "success_latency_ms": {
+            "mean": 71.5,
+            "p50": 69.8,
+            "p95": 85.2,
+            "p99": 94.7,
+            "max": 118.5
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 6.8,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 3328,
+          "success": 2976,
+          "failed": 352,
+          "error_rate_pct": 10.58,
+          "throughput_rps": 277.3,
+          "success_rps": 248.0,
+          "latency_ms": {
+            "mean": 90.9,
+            "p50": 91.8,
+            "p95": 127.8,
+            "p99": 145.1,
+            "max": 183.2
+          },
+          "success_latency_ms": {
+            "mean": 96.8,
+            "p50": 94.2,
+            "p95": 128.9,
+            "p99": 146.3,
+            "max": 183.2
+          },
+          "error_types": {
+            "500:other": 352
+          },
+          "pg_backends_max": 19,
+          "pg_backends_avg": 13.8,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 3999,
+          "success": 2128,
+          "failed": 1871,
+          "error_rate_pct": 46.79,
+          "throughput_rps": 333.2,
+          "success_rps": 177.3,
+          "latency_ms": {
+            "mean": 152.2,
+            "p50": 149.3,
+            "p95": 248.5,
+            "p99": 301.7,
+            "max": 496.0
+          },
+          "success_latency_ms": {
+            "mean": 174.1,
+            "p50": 169.5,
+            "p95": 254.6,
+            "p99": 302.6,
+            "max": 355.2
+          },
+          "error_types": {
+            "500:other": 1871
+          },
+          "pg_backends_max": 17,
+          "pg_backends_avg": 12.4,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 4275,
+          "success": 1059,
+          "failed": 3216,
+          "error_rate_pct": 75.23,
+          "throughput_rps": 356.2,
+          "success_rps": 88.2,
+          "latency_ms": {
+            "mean": 289.5,
+            "p50": 225.5,
+            "p95": 766.1,
+            "p99": 1119.6,
+            "max": 1784.3
+          },
+          "success_latency_ms": {
+            "mean": 300.5,
+            "p50": 260.6,
+            "p95": 607.9,
+            "p99": 1136.3,
+            "max": 1346.3
+          },
+          "error_types": {
+            "500:other": 3216
+          },
+          "pg_backends_max": 16,
+          "pg_backends_avg": 7.9,
+          "pg_sample_failures": 1
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 4673,
+          "success": 769,
+          "failed": 3904,
+          "error_rate_pct": 83.54,
+          "throughput_rps": 389.4,
+          "success_rps": 64.1,
+          "latency_ms": {
+            "mean": 551.6,
+            "p50": 340.9,
+            "p95": 1827.7,
+            "p99": 3054.3,
+            "max": 4173.5
+          },
+          "success_latency_ms": {
+            "mean": 393.6,
+            "p50": 312.0,
+            "p95": 990.2,
+            "p99": 1522.3,
+            "max": 2385.6
+          },
+          "error_types": {
+            "500:other": 3904
+          },
+          "pg_backends_max": 19,
+          "pg_backends_avg": 6.8,
+          "pg_sample_failures": 2
+        }
+      ]
+    },
+    {
+      "id": "S2-hikari10-1inst",
+      "scenario": "S2 HikariCP",
+      "label": "HikariCP pool 10 (< postgres pool 20), 1 instance(s), total demand 10",
+      "instances": 1,
+      "pooling": "hikari",
+      "hikari": 10,
+      "pgbouncer": null,
+      "pool_vs_pg": "<",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 2260,
+          "success": 2260,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 188.3,
+          "success_rps": 188.3,
+          "latency_ms": {
+            "mean": 53.5,
+            "p50": 53.1,
+            "p95": 56.3,
+            "p99": 58.7,
+            "max": 63.3
+          },
+          "success_latency_ms": {
+            "mean": 53.5,
+            "p50": 53.1,
+            "p95": 56.3,
+            "p99": 58.7,
+            "max": 63.3
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 9.7,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 2365,
+          "success": 2365,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 197.1,
+          "success_rps": 197.1,
+          "latency_ms": {
+            "mean": 128.0,
+            "p50": 150.5,
+            "p95": 156.0,
+            "p99": 205.3,
+            "max": 355.7
+          },
+          "success_latency_ms": {
+            "mean": 128.0,
+            "p50": 150.5,
+            "p95": 156.0,
+            "p99": 205.3,
+            "max": 355.7
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 2400,
+          "success": 2400,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 200.0,
+          "success_rps": 200.0,
+          "latency_ms": {
+            "mean": 255.4,
+            "p50": 255.0,
+            "p95": 457.3,
+            "p99": 459.8,
+            "max": 661.3
+          },
+          "success_latency_ms": {
+            "mean": 255.4,
+            "p50": 255.0,
+            "p95": 457.3,
+            "p99": 459.8,
+            "max": 661.3
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 2450,
+          "success": 2450,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 204.2,
+          "success_rps": 204.2,
+          "latency_ms": {
+            "mean": 511.5,
+            "p50": 510.7,
+            "p95": 965.1,
+            "p99": 970.4,
+            "max": 1427.6
+          },
+          "success_latency_ms": {
+            "mean": 511.5,
+            "p50": 510.7,
+            "p95": 965.1,
+            "p99": 970.4,
+            "max": 1427.6
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 2550,
+          "success": 2550,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 212.5,
+          "success_rps": 212.5,
+          "latency_ms": {
+            "mean": 1031.0,
+            "p50": 1022.5,
+            "p95": 1989.5,
+            "p99": 1994.7,
+            "max": 2935.6
+          },
+          "success_latency_ms": {
+            "mean": 1031.0,
+            "p50": 1022.5,
+            "p95": 1989.5,
+            "p99": 1994.7,
+            "max": 2935.6
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0
+        }
+      ]
+    },
+    {
+      "id": "S2-hikari20-1inst",
+      "scenario": "S2 HikariCP",
+      "label": "HikariCP pool 20 (= postgres pool 20), 1 instance(s), total demand 20",
+      "instances": 1,
+      "pooling": "hikari",
+      "hikari": 20,
+      "pgbouncer": null,
+      "pool_vs_pg": "=",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 2250,
+          "success": 2250,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 187.5,
+          "success_rps": 187.5,
+          "latency_ms": {
+            "mean": 53.6,
+            "p50": 53.3,
+            "p95": 56.3,
+            "p99": 58.2,
+            "max": 62.4
+          },
+          "success_latency_ms": {
+            "mean": 53.6,
+            "p50": 53.3,
+            "p95": 56.3,
+            "p99": 58.2,
+            "max": 62.4
+          },
+          "error_types": {},
+          "pg_backends_max": 11,
+          "pg_backends_avg": 10.7,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 4724,
+          "success": 4724,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 393.7,
+          "success_rps": 393.7,
+          "latency_ms": {
+            "mean": 63.8,
+            "p50": 53.4,
+            "p95": 97.3,
+            "p99": 98.9,
+            "max": 104.5
+          },
+          "success_latency_ms": {
+            "mean": 63.8,
+            "p50": 53.4,
+            "p95": 97.3,
+            "p99": 98.9,
+            "max": 104.5
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 19.7,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 4750,
+          "success": 4750,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 395.8,
+          "success_rps": 395.8,
+          "latency_ms": {
+            "mean": 127.7,
+            "p50": 148.3,
+            "p95": 157.1,
+            "p99": 204.6,
+            "max": 303.7
+          },
+          "success_latency_ms": {
+            "mean": 127.7,
+            "p50": 148.3,
+            "p95": 157.1,
+            "p99": 204.6,
+            "max": 303.7
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 4820,
+          "success": 4820,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 401.7,
+          "success_rps": 401.7,
+          "latency_ms": {
+            "mean": 254.9,
+            "p50": 254.6,
+            "p95": 456.4,
+            "p99": 460.0,
+            "max": 663.7
+          },
+          "success_latency_ms": {
+            "mean": 254.9,
+            "p50": 254.6,
+            "p95": 456.4,
+            "p99": 460.0,
+            "max": 663.7
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 4900,
+          "success": 4900,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 408.3,
+          "success_rps": 408.3,
+          "latency_ms": {
+            "mean": 511.4,
+            "p50": 509.4,
+            "p95": 965.7,
+            "p99": 970.4,
+            "max": 1431.3
+          },
+          "success_latency_ms": {
+            "mean": 511.4,
+            "p50": 509.4,
+            "p95": 965.7,
+            "p99": 970.4,
+            "max": 1431.3
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        }
+      ]
+    },
+    {
+      "id": "S2-hikari40-1inst",
+      "scenario": "S2 HikariCP",
+      "label": "HikariCP pool 40 (> postgres pool 20), 1 instance(s), total demand 40",
+      "instances": 1,
+      "pooling": "hikari",
+      "hikari": 40,
+      "pgbouncer": null,
+      "pool_vs_pg": ">",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 2270,
+          "success": 2270,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 189.2,
+          "success_rps": 189.2,
+          "latency_ms": {
+            "mean": 53.2,
+            "p50": 52.9,
+            "p95": 55.7,
+            "p99": 57.5,
+            "max": 62.2
+          },
+          "success_latency_ms": {
+            "mean": 53.2,
+            "p50": 52.9,
+            "p95": 55.7,
+            "p99": 57.5,
+            "max": 62.2
+          },
+          "error_types": {},
+          "pg_backends_max": 11,
+          "pg_backends_avg": 10.7,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 4725,
+          "success": 4725,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 393.8,
+          "success_rps": 393.8,
+          "latency_ms": {
+            "mean": 63.8,
+            "p50": 53.3,
+            "p95": 97.5,
+            "p99": 99.3,
+            "max": 104.4
+          },
+          "success_latency_ms": {
+            "mean": 63.8,
+            "p50": 53.3,
+            "p95": 97.5,
+            "p99": 99.3,
+            "max": 104.4
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 19.7,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 4756,
+          "success": 4756,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 396.3,
+          "success_rps": 396.3,
+          "latency_ms": {
+            "mean": 127.6,
+            "p50": 148.3,
+            "p95": 156.0,
+            "p99": 204.4,
+            "max": 256.7
+          },
+          "success_latency_ms": {
+            "mean": 127.6,
+            "p50": 148.3,
+            "p95": 156.0,
+            "p99": 204.4,
+            "max": 256.7
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 4800,
+          "success": 4800,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 400.0,
+          "success_rps": 400.0,
+          "latency_ms": {
+            "mean": 255.3,
+            "p50": 254.6,
+            "p95": 456.5,
+            "p99": 460.8,
+            "max": 664.5
+          },
+          "success_latency_ms": {
+            "mean": 255.3,
+            "p50": 254.6,
+            "p95": 456.5,
+            "p99": 460.8,
+            "max": 664.5
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 4900,
+          "success": 4900,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 408.3,
+          "success_rps": 408.3,
+          "latency_ms": {
+            "mean": 512.2,
+            "p50": 509.7,
+            "p95": 967.0,
+            "p99": 973.3,
+            "max": 1428.2
+          },
+          "success_latency_ms": {
+            "mean": 512.2,
+            "p50": 509.7,
+            "p95": 967.0,
+            "p99": 973.3,
+            "max": 1428.2
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        }
+      ]
+    },
+    {
+      "id": "S2-hikari10-4inst",
+      "scenario": "S2 HikariCP",
+      "label": "HikariCP pool 10 (< postgres pool 20), 4 instance(s), total demand 40",
+      "instances": 4,
+      "pooling": "hikari",
+      "hikari": 10,
+      "pgbouncer": null,
+      "pool_vs_pg": "<",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 2180,
+          "success": 2180,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 181.7,
+          "success_rps": 181.7,
+          "latency_ms": {
+            "mean": 55.4,
+            "p50": 54.6,
+            "p95": 60.0,
+            "p99": 64.8,
+            "max": 107.7
+          },
+          "success_latency_ms": {
+            "mean": 55.4,
+            "p50": 54.6,
+            "p95": 60.0,
+            "p99": 64.8,
+            "max": 107.7
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 19.6,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 4733,
+          "success": 4733,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 394.4,
+          "success_rps": 394.4,
+          "latency_ms": {
+            "mean": 63.8,
+            "p50": 59.5,
+            "p95": 84.1,
+            "p99": 89.1,
+            "max": 94.1
+          },
+          "success_latency_ms": {
+            "mean": 63.8,
+            "p50": 59.5,
+            "p95": 84.1,
+            "p99": 89.1,
+            "max": 94.1
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 4750,
+          "success": 4750,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 395.8,
+          "success_rps": 395.8,
+          "latency_ms": {
+            "mean": 129.2,
+            "p50": 54.9,
+            "p95": 350.7,
+            "p99": 354.0,
+            "max": 364.0
+          },
+          "success_latency_ms": {
+            "mean": 129.2,
+            "p50": 54.9,
+            "p95": 350.7,
+            "p99": 354.0,
+            "max": 364.0
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 4800,
+          "success": 4800,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 400.0,
+          "success_rps": 400.0,
+          "latency_ms": {
+            "mean": 265.8,
+            "p50": 53.7,
+            "p95": 865.0,
+            "p99": 868.4,
+            "max": 876.5
+          },
+          "success_latency_ms": {
+            "mean": 265.8,
+            "p50": 53.7,
+            "p95": 865.0,
+            "p99": 868.4,
+            "max": 876.5
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 4902,
+          "success": 4902,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 408.5,
+          "success_rps": 408.5,
+          "latency_ms": {
+            "mean": 560.4,
+            "p50": 54.6,
+            "p95": 1885.1,
+            "p99": 1892.4,
+            "max": 3729.9
+          },
+          "success_latency_ms": {
+            "mean": 560.4,
+            "p50": 54.6,
+            "p95": 1885.1,
+            "p99": 1892.4,
+            "max": 3729.9
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        }
+      ]
+    },
+    {
+      "id": "S2-hikari20-4inst",
+      "scenario": "S2 HikariCP",
+      "label": "HikariCP pool 20 (= postgres pool 20), 4 instance(s), total demand 80",
+      "instances": 4,
+      "pooling": "hikari",
+      "hikari": 20,
+      "pgbouncer": null,
+      "pool_vs_pg": "=",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 2174,
+          "success": 2174,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 181.2,
+          "success_rps": 181.2,
+          "latency_ms": {
+            "mean": 55.5,
+            "p50": 54.6,
+            "p95": 61.2,
+            "p99": 65.8,
+            "max": 82.2
+          },
+          "success_latency_ms": {
+            "mean": 55.5,
+            "p50": 54.6,
+            "p95": 61.2,
+            "p99": 65.8,
+            "max": 82.2
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 19.6,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 4722,
+          "success": 4722,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 393.5,
+          "success_rps": 393.5,
+          "latency_ms": {
+            "mean": 63.9,
+            "p50": 58.9,
+            "p95": 89.0,
+            "p99": 94.0,
+            "max": 106.6
+          },
+          "success_latency_ms": {
+            "mean": 63.9,
+            "p50": 58.9,
+            "p95": 89.0,
+            "p99": 94.0,
+            "max": 106.6
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 4737,
+          "success": 4737,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 394.8,
+          "success_rps": 394.8,
+          "latency_ms": {
+            "mean": 129.2,
+            "p50": 54.9,
+            "p95": 351.7,
+            "p99": 355.2,
+            "max": 654.9
+          },
+          "success_latency_ms": {
+            "mean": 129.2,
+            "p50": 54.9,
+            "p95": 351.7,
+            "p99": 355.2,
+            "max": 654.9
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 4800,
+          "success": 4800,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 400.0,
+          "success_rps": 400.0,
+          "latency_ms": {
+            "mean": 265.9,
+            "p50": 54.1,
+            "p95": 864.0,
+            "p99": 866.8,
+            "max": 1685.3
+          },
+          "success_latency_ms": {
+            "mean": 265.9,
+            "p50": 54.1,
+            "p95": 864.0,
+            "p99": 866.8,
+            "max": 1685.3
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 4896,
+          "success": 4896,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 408.0,
+          "success_rps": 408.0,
+          "latency_ms": {
+            "mean": 560.3,
+            "p50": 54.9,
+            "p95": 1885.0,
+            "p99": 1891.2,
+            "max": 3726.4
+          },
+          "success_latency_ms": {
+            "mean": 560.3,
+            "p50": 54.9,
+            "p95": 1885.0,
+            "p99": 1891.2,
+            "max": 3726.4
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        }
+      ]
+    },
+    {
+      "id": "S2-hikari40-4inst",
+      "scenario": "S2 HikariCP",
+      "label": "HikariCP pool 40 (> postgres pool 20), 4 instance(s), total demand 160",
+      "instances": 4,
+      "pooling": "hikari",
+      "hikari": 40,
+      "pgbouncer": null,
+      "pool_vs_pg": ">",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 2171,
+          "success": 2171,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 180.9,
+          "success_rps": 180.9,
+          "latency_ms": {
+            "mean": 55.6,
+            "p50": 54.8,
+            "p95": 61.1,
+            "p99": 64.5,
+            "max": 80.3
+          },
+          "success_latency_ms": {
+            "mean": 55.6,
+            "p50": 54.8,
+            "p95": 61.1,
+            "p99": 64.5,
+            "max": 80.3
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 19.5,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 4730,
+          "success": 4730,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 394.2,
+          "success_rps": 394.2,
+          "latency_ms": {
+            "mean": 63.8,
+            "p50": 58.7,
+            "p95": 90.7,
+            "p99": 95.3,
+            "max": 100.0
+          },
+          "success_latency_ms": {
+            "mean": 63.8,
+            "p50": 58.7,
+            "p95": 90.7,
+            "p99": 95.3,
+            "max": 100.0
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 4750,
+          "success": 4750,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 395.8,
+          "success_rps": 395.8,
+          "latency_ms": {
+            "mean": 129.1,
+            "p50": 54.7,
+            "p95": 350.3,
+            "p99": 352.5,
+            "max": 356.0
+          },
+          "success_latency_ms": {
+            "mean": 129.1,
+            "p50": 54.7,
+            "p95": 350.3,
+            "p99": 352.5,
+            "max": 356.0
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 4800,
+          "success": 4800,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 400.0,
+          "success_rps": 400.0,
+          "latency_ms": {
+            "mean": 265.8,
+            "p50": 54.0,
+            "p95": 864.0,
+            "p99": 867.5,
+            "max": 1685.2
+          },
+          "success_latency_ms": {
+            "mean": 265.8,
+            "p50": 54.0,
+            "p95": 864.0,
+            "p99": 867.5,
+            "max": 1685.2
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 4900,
+          "success": 4900,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 408.3,
+          "success_rps": 408.3,
+          "latency_ms": {
+            "mean": 560.8,
+            "p50": 55.1,
+            "p95": 1886.6,
+            "p99": 1890.1,
+            "max": 1894.4
+          },
+          "success_latency_ms": {
+            "mean": 560.8,
+            "p50": 55.1,
+            "p95": 1886.6,
+            "p99": 1890.1,
+            "max": 1894.4
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0
+        }
+      ]
+    },
+    {
+      "id": "S3-hikari10-1inst-pgb20",
+      "scenario": "S3 HikariCP + PgBouncer",
+      "label": "HikariCP pool 10 (< postgres pool 20), 1 instance(s), total demand 10, PgBouncer pool 20",
+      "instances": 1,
+      "pooling": "hikari",
+      "hikari": 10,
+      "pgbouncer": 20,
+      "pool_vs_pg": "<",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 2240,
+          "success": 2240,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 186.7,
+          "success_rps": 186.7,
+          "latency_ms": {
+            "mean": 53.9,
+            "p50": 53.6,
+            "p95": 56.8,
+            "p99": 59.2,
+            "max": 61.7
+          },
+          "success_latency_ms": {
+            "mean": 53.9,
+            "p50": 53.6,
+            "p95": 56.8,
+            "p99": 59.2,
+            "max": 61.7
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 9.7,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 10,
+            "cl_waiting_max": 0,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 2355,
+          "success": 2355,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 196.2,
+          "success_rps": 196.2,
+          "latency_ms": {
+            "mean": 128.8,
+            "p50": 151.3,
+            "p95": 156.8,
+            "p99": 205.4,
+            "max": 261.7
+          },
+          "success_latency_ms": {
+            "mean": 128.8,
+            "p50": 151.3,
+            "p95": 156.8,
+            "p99": 205.4,
+            "max": 261.7
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 10,
+            "cl_waiting_max": 0,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 2380,
+          "success": 2380,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 198.3,
+          "success_rps": 198.3,
+          "latency_ms": {
+            "mean": 257.3,
+            "p50": 257.0,
+            "p95": 459.5,
+            "p99": 462.7,
+            "max": 465.5
+          },
+          "success_latency_ms": {
+            "mean": 257.3,
+            "p50": 257.0,
+            "p95": 459.5,
+            "p99": 462.7,
+            "max": 465.5
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 10,
+            "cl_waiting_max": 0,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 2430,
+          "success": 2430,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 202.5,
+          "success_rps": 202.5,
+          "latency_ms": {
+            "mean": 514.1,
+            "p50": 514.0,
+            "p95": 971.5,
+            "p99": 976.5,
+            "max": 980.7
+          },
+          "success_latency_ms": {
+            "mean": 514.1,
+            "p50": 514.0,
+            "p95": 971.5,
+            "p99": 976.5,
+            "max": 980.7
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 10,
+            "cl_waiting_max": 0,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 2536,
+          "success": 2536,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 211.3,
+          "success_rps": 211.3,
+          "latency_ms": {
+            "mean": 1030.1,
+            "p50": 1025.4,
+            "p95": 1064.1,
+            "p99": 2004.6,
+            "max": 2972.1
+          },
+          "success_latency_ms": {
+            "mean": 1030.1,
+            "p50": 1025.4,
+            "p95": 1064.1,
+            "p99": 2004.6,
+            "max": 2972.1
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 10,
+            "cl_waiting_max": 0,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "S3-hikari20-1inst-pgb20",
+      "scenario": "S3 HikariCP + PgBouncer",
+      "label": "HikariCP pool 20 (= postgres pool 20), 1 instance(s), total demand 20, PgBouncer pool 20",
+      "instances": 1,
+      "pooling": "hikari",
+      "hikari": 20,
+      "pgbouncer": 20,
+      "pool_vs_pg": "=",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 2230,
+          "success": 2230,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 185.8,
+          "success_rps": 185.8,
+          "latency_ms": {
+            "mean": 54.0,
+            "p50": 53.5,
+            "p95": 57.2,
+            "p99": 60.8,
+            "max": 81.9
+          },
+          "success_latency_ms": {
+            "mean": 54.0,
+            "p50": 53.5,
+            "p95": 57.2,
+            "p99": 60.8,
+            "max": 81.9
+          },
+          "error_types": {},
+          "pg_backends_max": 11,
+          "pg_backends_avg": 10.7,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 11,
+            "cl_waiting_max": 0,
+            "sv_active_max": 10,
+            "sv_total_max": 11,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 4705,
+          "success": 4705,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 392.1,
+          "success_rps": 392.1,
+          "latency_ms": {
+            "mean": 64.2,
+            "p50": 53.7,
+            "p95": 97.9,
+            "p99": 99.9,
+            "max": 105.6
+          },
+          "success_latency_ms": {
+            "mean": 64.2,
+            "p50": 53.7,
+            "p95": 97.9,
+            "p99": 99.9,
+            "max": 105.6
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 19.7,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 20,
+            "cl_waiting_max": 0,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 4718,
+          "success": 4718,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 393.2,
+          "success_rps": 393.2,
+          "latency_ms": {
+            "mean": 128.4,
+            "p50": 148.9,
+            "p95": 158.0,
+            "p99": 206.5,
+            "max": 303.5
+          },
+          "success_latency_ms": {
+            "mean": 128.4,
+            "p50": 148.9,
+            "p95": 158.0,
+            "p99": 206.5,
+            "max": 303.5
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 20,
+            "cl_waiting_max": 0,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 4780,
+          "success": 4780,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 398.3,
+          "success_rps": 398.3,
+          "latency_ms": {
+            "mean": 256.5,
+            "p50": 256.0,
+            "p95": 459.0,
+            "p99": 462.6,
+            "max": 665.6
+          },
+          "success_latency_ms": {
+            "mean": 256.5,
+            "p50": 256.0,
+            "p95": 459.0,
+            "p99": 462.6,
+            "max": 665.6
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 20,
+            "cl_waiting_max": 0,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 4880,
+          "success": 4880,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 406.7,
+          "success_rps": 406.7,
+          "latency_ms": {
+            "mean": 514.2,
+            "p50": 512.6,
+            "p95": 971.8,
+            "p99": 976.2,
+            "max": 1438.1
+          },
+          "success_latency_ms": {
+            "mean": 514.2,
+            "p50": 512.6,
+            "p95": 971.8,
+            "p99": 976.2,
+            "max": 1438.1
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 20,
+            "cl_waiting_max": 0,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "S3-hikari40-1inst-pgb20",
+      "scenario": "S3 HikariCP + PgBouncer",
+      "label": "HikariCP pool 40 (> postgres pool 20), 1 instance(s), total demand 40, PgBouncer pool 20",
+      "instances": 1,
+      "pooling": "hikari",
+      "hikari": 40,
+      "pgbouncer": 20,
+      "pool_vs_pg": ">",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 2240,
+          "success": 2240,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 186.7,
+          "success_rps": 186.7,
+          "latency_ms": {
+            "mean": 53.7,
+            "p50": 53.3,
+            "p95": 56.9,
+            "p99": 59.0,
+            "max": 65.2
+          },
+          "success_latency_ms": {
+            "mean": 53.7,
+            "p50": 53.3,
+            "p95": 56.9,
+            "p99": 59.0,
+            "max": 65.2
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 9.7,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 12,
+            "cl_waiting_max": 0,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 4760,
+          "success": 4760,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 396.7,
+          "success_rps": 396.7,
+          "latency_ms": {
+            "mean": 63.4,
+            "p50": 59.4,
+            "p95": 90.1,
+            "p99": 96.3,
+            "max": 100.2
+          },
+          "success_latency_ms": {
+            "mean": 63.4,
+            "p50": 59.4,
+            "p95": 90.1,
+            "p99": 96.3,
+            "max": 100.2
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 19.7,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 27,
+            "cl_waiting_max": 5,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 4764,
+          "success": 4764,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 397.0,
+          "success_rps": 397.0,
+          "latency_ms": {
+            "mean": 127.5,
+            "p50": 145.7,
+            "p95": 153.7,
+            "p99": 156.3,
+            "max": 203.7
+          },
+          "success_latency_ms": {
+            "mean": 127.5,
+            "p50": 145.7,
+            "p95": 153.7,
+            "p99": 156.3,
+            "max": 203.7
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 40,
+            "cl_waiting_max": 20,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 4820,
+          "success": 4820,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 401.7,
+          "success_rps": 401.7,
+          "latency_ms": {
+            "mean": 254.3,
+            "p50": 253.9,
+            "p95": 403.6,
+            "p99": 407.2,
+            "max": 556.0
+          },
+          "success_latency_ms": {
+            "mean": 254.3,
+            "p50": 253.9,
+            "p95": 403.6,
+            "p99": 407.2,
+            "max": 556.0
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 24,
+            "cl_waiting_max": 20,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 4920,
+          "success": 4920,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 410.0,
+          "success_rps": 410.0,
+          "latency_ms": {
+            "mean": 510.1,
+            "p50": 508.1,
+            "p95": 912.3,
+            "p99": 916.3,
+            "max": 1321.9
+          },
+          "success_latency_ms": {
+            "mean": 510.1,
+            "p50": 508.1,
+            "p95": 912.3,
+            "p99": 916.3,
+            "max": 1321.9
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 21,
+            "cl_waiting_max": 20,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "S3-hikari10-4inst-pgb20",
+      "scenario": "S3 HikariCP + PgBouncer",
+      "label": "HikariCP pool 10 (< postgres pool 20), 4 instance(s), total demand 40, PgBouncer pool 20",
+      "instances": 4,
+      "pooling": "hikari",
+      "hikari": 10,
+      "pgbouncer": 20,
+      "pool_vs_pg": "<",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 2174,
+          "success": 2174,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 181.2,
+          "success_rps": 181.2,
+          "latency_ms": {
+            "mean": 55.5,
+            "p50": 55.1,
+            "p95": 59.2,
+            "p99": 62.3,
+            "max": 68.3
+          },
+          "success_latency_ms": {
+            "mean": 55.5,
+            "p50": 55.1,
+            "p95": 59.2,
+            "p99": 62.3,
+            "max": 68.3
+          },
+          "error_types": {},
+          "pg_backends_max": 11,
+          "pg_backends_avg": 10.6,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 40,
+            "cl_waiting_max": 0,
+            "sv_active_max": 10,
+            "sv_total_max": 11,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 4767,
+          "success": 4767,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 397.2,
+          "success_rps": 397.2,
+          "latency_ms": {
+            "mean": 63.3,
+            "p50": 62.9,
+            "p95": 70.5,
+            "p99": 73.8,
+            "max": 78.2
+          },
+          "success_latency_ms": {
+            "mean": 63.3,
+            "p50": 62.9,
+            "p95": 70.5,
+            "p99": 73.8,
+            "max": 78.2
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 19.7,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 37,
+            "cl_waiting_max": 6,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 4777,
+          "success": 4777,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 398.1,
+          "success_rps": 398.1,
+          "latency_ms": {
+            "mean": 127.1,
+            "p50": 110.5,
+            "p95": 154.8,
+            "p99": 158.5,
+            "max": 205.5
+          },
+          "success_latency_ms": {
+            "mean": 127.1,
+            "p50": 110.5,
+            "p95": 154.8,
+            "p99": 158.5,
+            "max": 205.5
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 40,
+            "cl_waiting_max": 20,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 4820,
+          "success": 4820,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 401.7,
+          "success_rps": 401.7,
+          "latency_ms": {
+            "mean": 256.9,
+            "p50": 150.6,
+            "p95": 658.9,
+            "p99": 1115.8,
+            "max": 1217.7
+          },
+          "success_latency_ms": {
+            "mean": 256.9,
+            "p50": 150.6,
+            "p95": 658.9,
+            "p99": 1115.8,
+            "max": 1217.7
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 40,
+            "cl_waiting_max": 20,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 4922,
+          "success": 4922,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 410.2,
+          "success_rps": 410.2,
+          "latency_ms": {
+            "mean": 530.5,
+            "p50": 151.3,
+            "p95": 1634.8,
+            "p99": 3103.6,
+            "max": 4675.7
+          },
+          "success_latency_ms": {
+            "mean": 530.5,
+            "p50": 151.3,
+            "p95": 1634.8,
+            "p99": 3103.6,
+            "max": 4675.7
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 40,
+            "cl_waiting_max": 20,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "S3-hikari20-4inst-pgb20",
+      "scenario": "S3 HikariCP + PgBouncer",
+      "label": "HikariCP pool 20 (= postgres pool 20), 4 instance(s), total demand 80, PgBouncer pool 20",
+      "instances": 4,
+      "pooling": "hikari",
+      "hikari": 20,
+      "pgbouncer": 20,
+      "pool_vs_pg": "=",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 2172,
+          "success": 2172,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 181.0,
+          "success_rps": 181.0,
+          "latency_ms": {
+            "mean": 55.5,
+            "p50": 55.2,
+            "p95": 59.0,
+            "p99": 61.6,
+            "max": 70.4
+          },
+          "success_latency_ms": {
+            "mean": 55.5,
+            "p50": 55.2,
+            "p95": 59.0,
+            "p99": 61.6,
+            "max": 70.4
+          },
+          "error_types": {},
+          "pg_backends_max": 11,
+          "pg_backends_avg": 10.6,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 32,
+            "cl_waiting_max": 0,
+            "sv_active_max": 10,
+            "sv_total_max": 11,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 4734,
+          "success": 4734,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 394.5,
+          "success_rps": 394.5,
+          "latency_ms": {
+            "mean": 63.7,
+            "p50": 56.6,
+            "p95": 89.8,
+            "p99": 92.6,
+            "max": 112.4
+          },
+          "success_latency_ms": {
+            "mean": 63.7,
+            "p50": 56.6,
+            "p95": 89.8,
+            "p99": 92.6,
+            "max": 112.4
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 19.7,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 76,
+            "cl_waiting_max": 7,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 4780,
+          "success": 4780,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 398.3,
+          "success_rps": 398.3,
+          "latency_ms": {
+            "mean": 127.1,
+            "p50": 127.6,
+            "p95": 153.8,
+            "p99": 156.5,
+            "max": 163.6
+          },
+          "success_latency_ms": {
+            "mean": 127.1,
+            "p50": 127.6,
+            "p95": 153.8,
+            "p99": 156.5,
+            "max": 163.6
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 66,
+            "cl_waiting_max": 30,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 4834,
+          "success": 4834,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 402.8,
+          "success_rps": 402.8,
+          "latency_ms": {
+            "mean": 254.2,
+            "p50": 253.1,
+            "p95": 305.4,
+            "p99": 348.4,
+            "max": 457.0
+          },
+          "success_latency_ms": {
+            "mean": 254.2,
+            "p50": 253.1,
+            "p95": 305.4,
+            "p99": 348.4,
+            "max": 457.0
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 60,
+            "cl_waiting_max": 60,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 4922,
+          "success": 4922,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 410.2,
+          "success_rps": 410.2,
+          "latency_ms": {
+            "mean": 519.5,
+            "p50": 253.2,
+            "p95": 1326.1,
+            "p99": 2386.3,
+            "max": 3503.8
+          },
+          "success_latency_ms": {
+            "mean": 519.5,
+            "p50": 253.2,
+            "p95": 1326.1,
+            "p99": 2386.3,
+            "max": 3503.8
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 80,
+            "cl_waiting_max": 60,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "S3-hikari40-4inst-pgb20",
+      "scenario": "S3 HikariCP + PgBouncer",
+      "label": "HikariCP pool 40 (> postgres pool 20), 4 instance(s), total demand 160, PgBouncer pool 20",
+      "instances": 4,
+      "pooling": "hikari",
+      "hikari": 40,
+      "pgbouncer": 20,
+      "pool_vs_pg": ">",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 2184,
+          "success": 2184,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 182.0,
+          "success_rps": 182.0,
+          "latency_ms": {
+            "mean": 55.3,
+            "p50": 55.0,
+            "p95": 58.9,
+            "p99": 60.8,
+            "max": 64.2
+          },
+          "success_latency_ms": {
+            "mean": 55.3,
+            "p50": 55.0,
+            "p95": 58.9,
+            "p99": 60.8,
+            "max": 64.2
+          },
+          "error_types": {},
+          "pg_backends_max": 11,
+          "pg_backends_avg": 10.7,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 40,
+            "cl_waiting_max": 0,
+            "sv_active_max": 10,
+            "sv_total_max": 11,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 4766,
+          "success": 4766,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 397.2,
+          "success_rps": 397.2,
+          "latency_ms": {
+            "mean": 63.3,
+            "p50": 63.3,
+            "p95": 71.8,
+            "p99": 75.9,
+            "max": 79.9
+          },
+          "success_latency_ms": {
+            "mean": 63.3,
+            "p50": 63.3,
+            "p95": 71.8,
+            "p99": 75.9,
+            "max": 79.9
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 19.7,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 79,
+            "cl_waiting_max": 5,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 4770,
+          "success": 4770,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 397.5,
+          "success_rps": 397.5,
+          "latency_ms": {
+            "mean": 127.2,
+            "p50": 122.2,
+            "p95": 154.4,
+            "p99": 157.5,
+            "max": 205.5
+          },
+          "success_latency_ms": {
+            "mean": 127.2,
+            "p50": 122.2,
+            "p95": 154.4,
+            "p99": 157.5,
+            "max": 205.5
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 76,
+            "cl_waiting_max": 30,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 4820,
+          "success": 4820,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 401.7,
+          "success_rps": 401.7,
+          "latency_ms": {
+            "mean": 254.3,
+            "p50": 253.8,
+            "p95": 259.3,
+            "p99": 263.4,
+            "max": 458.0
+          },
+          "success_latency_ms": {
+            "mean": 254.3,
+            "p50": 253.8,
+            "p95": 259.3,
+            "p99": 263.4,
+            "max": 458.0
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 125,
+            "cl_waiting_max": 82,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 4914,
+          "success": 4914,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 409.5,
+          "success_rps": 409.5,
+          "latency_ms": {
+            "mean": 510.1,
+            "p50": 503.3,
+            "p95": 658.4,
+            "p99": 809.6,
+            "max": 964.6
+          },
+          "success_latency_ms": {
+            "mean": 510.1,
+            "p50": 503.3,
+            "p95": 658.4,
+            "p99": 809.6,
+            "max": 964.6
+          },
+          "error_types": {},
+          "pg_backends_max": 20,
+          "pg_backends_avg": 20.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 160,
+            "cl_waiting_max": 140,
+            "sv_active_max": 20,
+            "sv_total_max": 20,
+            "maxwait_s": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "S3-hikari20-1inst-pgb5",
+      "scenario": "S3 PgBouncer pool sweep",
+      "label": "HikariCP pool 20, 1 instance(s), total demand 20, PgBouncer pool 5",
+      "instances": 1,
+      "pooling": "hikari",
+      "hikari": 20,
+      "pgbouncer": 5,
+      "pool_vs_pg": "=",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 1190,
+          "success": 1190,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 99.2,
+          "success_rps": 99.2,
+          "latency_ms": {
+            "mean": 101.6,
+            "p50": 101.4,
+            "p95": 103.2,
+            "p99": 105.1,
+            "max": 109.2
+          },
+          "success_latency_ms": {
+            "mean": 101.6,
+            "p50": 101.4,
+            "p95": 103.2,
+            "p99": 105.1,
+            "max": 109.2
+          },
+          "error_types": {},
+          "pg_backends_max": 5,
+          "pg_backends_avg": 4.9,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 9,
+            "cl_waiting_max": 5,
+            "sv_active_max": 5,
+            "sv_total_max": 5,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 1205,
+          "success": 1205,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 100.4,
+          "success_rps": 100.4,
+          "latency_ms": {
+            "mean": 254.1,
+            "p50": 254.1,
+            "p95": 255.7,
+            "p99": 304.2,
+            "max": 307.3
+          },
+          "success_latency_ms": {
+            "mean": 254.1,
+            "p50": 254.1,
+            "p95": 255.7,
+            "p99": 304.2,
+            "max": 307.3
+          },
+          "error_types": {},
+          "pg_backends_max": 5,
+          "pg_backends_avg": 5.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 5,
+            "cl_waiting_max": 15,
+            "sv_active_max": 5,
+            "sv_total_max": 5,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 1230,
+          "success": 1230,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 102.5,
+          "success_rps": 102.5,
+          "latency_ms": {
+            "mean": 508.3,
+            "p50": 508.3,
+            "p95": 510.1,
+            "p99": 812.9,
+            "max": 815.1
+          },
+          "success_latency_ms": {
+            "mean": 508.3,
+            "p50": 508.3,
+            "p95": 510.1,
+            "p99": 812.9,
+            "max": 815.1
+          },
+          "error_types": {},
+          "pg_backends_max": 5,
+          "pg_backends_avg": 5.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 5,
+            "cl_waiting_max": 15,
+            "sv_active_max": 5,
+            "sv_total_max": 5,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 1280,
+          "success": 1280,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 106.7,
+          "success_rps": 106.7,
+          "latency_ms": {
+            "mean": 1016.8,
+            "p50": 1016.7,
+            "p95": 1020.3,
+            "p99": 1830.1,
+            "max": 1831.7
+          },
+          "success_latency_ms": {
+            "mean": 1016.8,
+            "p50": 1016.7,
+            "p95": 1020.3,
+            "p99": 1830.1,
+            "max": 1831.7
+          },
+          "error_types": {},
+          "pg_backends_max": 5,
+          "pg_backends_avg": 5.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 6,
+            "cl_waiting_max": 15,
+            "sv_active_max": 5,
+            "sv_total_max": 5,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 1380,
+          "success": 1380,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 115.0,
+          "success_rps": 115.0,
+          "latency_ms": {
+            "mean": 2043.3,
+            "p50": 2034.7,
+            "p95": 2068.6,
+            "p99": 3865.7,
+            "max": 3900.2
+          },
+          "success_latency_ms": {
+            "mean": 2043.3,
+            "p50": 2034.7,
+            "p95": 2068.6,
+            "p99": 3865.7,
+            "max": 3900.2
+          },
+          "error_types": {},
+          "pg_backends_max": 5,
+          "pg_backends_avg": 5.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 10,
+            "cl_waiting_max": 15,
+            "sv_active_max": 5,
+            "sv_total_max": 5,
+            "maxwait_s": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "S3-hikari20-1inst-pgb10",
+      "scenario": "S3 PgBouncer pool sweep",
+      "label": "HikariCP pool 20, 1 instance(s), total demand 20, PgBouncer pool 10",
+      "instances": 1,
+      "pooling": "hikari",
+      "hikari": 20,
+      "pgbouncer": 10,
+      "pool_vs_pg": "=",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 2290,
+          "success": 2290,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 190.8,
+          "success_rps": 190.8,
+          "latency_ms": {
+            "mean": 52.6,
+            "p50": 52.3,
+            "p95": 54.5,
+            "p99": 57.8,
+            "max": 67.0
+          },
+          "success_latency_ms": {
+            "mean": 52.6,
+            "p50": 52.3,
+            "p95": 54.5,
+            "p99": 57.8,
+            "max": 67.0
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 9.7,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 11,
+            "cl_waiting_max": 0,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 2385,
+          "success": 2385,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 198.8,
+          "success_rps": 198.8,
+          "latency_ms": {
+            "mean": 126.8,
+            "p50": 145.4,
+            "p95": 152.8,
+            "p99": 153.9,
+            "max": 202.8
+          },
+          "success_latency_ms": {
+            "mean": 126.8,
+            "p50": 145.4,
+            "p95": 152.8,
+            "p99": 153.9,
+            "max": 202.8
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 15,
+            "cl_waiting_max": 10,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 2410,
+          "success": 2410,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 200.8,
+          "success_rps": 200.8,
+          "latency_ms": {
+            "mean": 254.2,
+            "p50": 253.5,
+            "p95": 403.9,
+            "p99": 406.4,
+            "max": 555.1
+          },
+          "success_latency_ms": {
+            "mean": 254.2,
+            "p50": 253.5,
+            "p95": 403.9,
+            "p99": 406.4,
+            "max": 555.1
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 10,
+            "cl_waiting_max": 10,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 2460,
+          "success": 2460,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 205.0,
+          "success_rps": 205.0,
+          "latency_ms": {
+            "mean": 507.5,
+            "p50": 507.2,
+            "p95": 910.5,
+            "p99": 914.1,
+            "max": 1316.8
+          },
+          "success_latency_ms": {
+            "mean": 507.5,
+            "p50": 507.2,
+            "p95": 910.5,
+            "p99": 914.1,
+            "max": 1316.8
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 10,
+            "cl_waiting_max": 10,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 2550,
+          "success": 2550,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 212.5,
+          "success_rps": 212.5,
+          "latency_ms": {
+            "mean": 1023.6,
+            "p50": 1013.8,
+            "p95": 1924.5,
+            "p99": 1970.2,
+            "max": 2838.4
+          },
+          "success_latency_ms": {
+            "mean": 1023.6,
+            "p50": 1013.8,
+            "p95": 1924.5,
+            "p99": 1970.2,
+            "max": 2838.4
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 10,
+            "cl_waiting_max": 10,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "S3-hikari40-4inst-pgb5",
+      "scenario": "S3 PgBouncer pool sweep",
+      "label": "HikariCP pool 40, 4 instance(s), total demand 160, PgBouncer pool 5",
+      "instances": 4,
+      "pooling": "hikari",
+      "hikari": 40,
+      "pgbouncer": 5,
+      "pool_vs_pg": ">",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 1195,
+          "success": 1195,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 99.6,
+          "success_rps": 99.6,
+          "latency_ms": {
+            "mean": 101.2,
+            "p50": 101.2,
+            "p95": 102.2,
+            "p99": 103.9,
+            "max": 145.3
+          },
+          "success_latency_ms": {
+            "mean": 101.2,
+            "p50": 101.2,
+            "p95": 102.2,
+            "p99": 103.9,
+            "max": 145.3
+          },
+          "error_types": {},
+          "pg_backends_max": 5,
+          "pg_backends_avg": 4.9,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 24,
+            "cl_waiting_max": 5,
+            "sv_active_max": 5,
+            "sv_total_max": 5,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 1210,
+          "success": 1210,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 100.8,
+          "success_rps": 100.8,
+          "latency_ms": {
+            "mean": 253.5,
+            "p50": 253.2,
+            "p95": 255.5,
+            "p99": 412.1,
+            "max": 455.7
+          },
+          "success_latency_ms": {
+            "mean": 253.5,
+            "p50": 253.2,
+            "p95": 255.5,
+            "p99": 412.1,
+            "max": 455.7
+          },
+          "error_types": {},
+          "pg_backends_max": 5,
+          "pg_backends_avg": 5.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 24,
+            "cl_waiting_max": 20,
+            "sv_active_max": 5,
+            "sv_total_max": 5,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 1235,
+          "success": 1235,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 102.9,
+          "success_rps": 102.9,
+          "latency_ms": {
+            "mean": 508.1,
+            "p50": 555.6,
+            "p95": 660.3,
+            "p99": 713.0,
+            "max": 808.8
+          },
+          "success_latency_ms": {
+            "mean": 508.1,
+            "p50": 555.6,
+            "p95": 660.3,
+            "p99": 713.0,
+            "max": 808.8
+          },
+          "error_types": {},
+          "pg_backends_max": 5,
+          "pg_backends_avg": 5.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 74,
+            "cl_waiting_max": 46,
+            "sv_active_max": 5,
+            "sv_total_max": 5,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 1278,
+          "success": 1278,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 106.5,
+          "success_rps": 106.5,
+          "latency_ms": {
+            "mean": 1017.9,
+            "p50": 1017.0,
+            "p95": 1120.1,
+            "p99": 1441.7,
+            "max": 1691.1
+          },
+          "success_latency_ms": {
+            "mean": 1017.9,
+            "p50": 1017.0,
+            "p95": 1120.1,
+            "p99": 1441.7,
+            "max": 1691.1
+          },
+          "error_types": {},
+          "pg_backends_max": 5,
+          "pg_backends_avg": 5.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 125,
+            "cl_waiting_max": 77,
+            "sv_active_max": 5,
+            "sv_total_max": 5,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 1385,
+          "success": 1385,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 115.4,
+          "success_rps": 115.4,
+          "latency_ms": {
+            "mean": 2047.5,
+            "p50": 2030.7,
+            "p95": 2131.6,
+            "p99": 3183.7,
+            "max": 3526.8
+          },
+          "success_latency_ms": {
+            "mean": 2047.5,
+            "p50": 2030.7,
+            "p95": 2131.6,
+            "p99": 3183.7,
+            "max": 3526.8
+          },
+          "error_types": {},
+          "pg_backends_max": 5,
+          "pg_backends_avg": 5.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 130,
+            "cl_waiting_max": 118,
+            "sv_active_max": 5,
+            "sv_total_max": 5,
+            "maxwait_s": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "S3-hikari40-4inst-pgb10",
+      "scenario": "S3 PgBouncer pool sweep",
+      "label": "HikariCP pool 40, 4 instance(s), total demand 160, PgBouncer pool 10",
+      "instances": 4,
+      "pooling": "hikari",
+      "hikari": 40,
+      "pgbouncer": 10,
+      "pool_vs_pg": ">",
+      "levels": [
+        {
+          "concurrency": 10,
+          "duration_s": 12.0,
+          "requests": 2174,
+          "success": 2174,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 181.2,
+          "success_rps": 181.2,
+          "latency_ms": {
+            "mean": 55.3,
+            "p50": 54.8,
+            "p95": 59.3,
+            "p99": 62.8,
+            "max": 69.0
+          },
+          "success_latency_ms": {
+            "mean": 55.3,
+            "p50": 54.8,
+            "p95": 59.3,
+            "p99": 62.8,
+            "max": 69.0
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 9.7,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 40,
+            "cl_waiting_max": 0,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 25,
+          "duration_s": 12.0,
+          "requests": 2392,
+          "success": 2392,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 199.3,
+          "success_rps": 199.3,
+          "latency_ms": {
+            "mean": 126.7,
+            "p50": 127.0,
+            "p95": 149.1,
+            "p99": 151.1,
+            "max": 199.9
+          },
+          "success_latency_ms": {
+            "mean": 126.7,
+            "p50": 127.0,
+            "p95": 149.1,
+            "p99": 151.1,
+            "max": 199.9
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 57,
+            "cl_waiting_max": 16,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 50,
+          "duration_s": 12.0,
+          "requests": 2418,
+          "success": 2418,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 201.5,
+          "success_rps": 201.5,
+          "latency_ms": {
+            "mean": 253.7,
+            "p50": 253.0,
+            "p95": 257.0,
+            "p99": 410.3,
+            "max": 459.9
+          },
+          "success_latency_ms": {
+            "mean": 253.7,
+            "p50": 253.0,
+            "p95": 257.0,
+            "p99": 410.3,
+            "max": 459.9
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 61,
+            "cl_waiting_max": 41,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 100,
+          "duration_s": 12.0,
+          "requests": 2463,
+          "success": 2463,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 205.2,
+          "success_rps": 205.2,
+          "latency_ms": {
+            "mean": 508.7,
+            "p50": 518.4,
+            "p95": 709.3,
+            "p99": 763.6,
+            "max": 961.5
+          },
+          "success_latency_ms": {
+            "mean": 508.7,
+            "p50": 518.4,
+            "p95": 709.3,
+            "p99": 763.6,
+            "max": 961.5
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 104,
+            "cl_waiting_max": 82,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        },
+        {
+          "concurrency": 200,
+          "duration_s": 12.0,
+          "requests": 2570,
+          "success": 2570,
+          "failed": 0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 214.2,
+          "success_rps": 214.2,
+          "latency_ms": {
+            "mean": 1016.6,
+            "p50": 1060.3,
+            "p95": 1314.3,
+            "p99": 1521.8,
+            "max": 1872.5
+          },
+          "success_latency_ms": {
+            "mean": 1016.6,
+            "p50": 1060.3,
+            "p95": 1314.3,
+            "p99": 1521.8,
+            "max": 1872.5
+          },
+          "error_types": {},
+          "pg_backends_max": 10,
+          "pg_backends_avg": 10.0,
+          "pg_sample_failures": 0,
+          "pgbouncer": {
+            "cl_active_max": 120,
+            "cl_waiting_max": 150,
+            "sv_active_max": 10,
+            "sv_total_max": 10,
+            "maxwait_s": 0
+          }
+        }
+      ]
+    }
+  ]
+}

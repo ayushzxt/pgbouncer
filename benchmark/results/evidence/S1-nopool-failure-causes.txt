@@ -1,0 +1,11 @@
+Root causes of the failures in S1 (PostgreSQL direct, no connection pool).
+Extracted from the application log of that run. Spring reports only the
+top-level exception over HTTP ('Failed to obtain JDBC Connection'), so the
+underlying PostgreSQL error is recovered from the log.
+
+Total connection-acquisition failures (CannotGetJdbcConnectionException):
+11136
+
+PostgreSQL root causes, by count:
+   9586 FATAL: remaining connection slots are reserved for roles with the SUPERUSER attribute
+   1550 FATAL: sorry, too many clients already

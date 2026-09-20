@@ -1,0 +1,9 @@
+org.postgresql.util.PSQLException: FATAL: remaining connection slots are reserved for roles with the SUPERUSER attribute
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2904) ~[postgresql-42.7.11.jar!/:42.7.11]
+	at org.postgresql.core.v3.QueryExecutorImpl.readStartupMessages(QueryExecutorImpl.java:3029) ~[postgresql-42.7.11.jar!/:42.7.11]
+	at org.postgresql.core.v3.QueryExecutorImpl.<init>(QueryExecutorImpl.java:237) ~[postgresql-42.7.11.jar!/:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:396) ~[postgresql-42.7.11.jar!/:42.7.11]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.11.jar!/:42.7.11]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290) ~[postgresql-42.7.11.jar!/:42.7.11]
+	at org.postgresql.Driver.makeConnection(Driver.java:448) ~[postgresql-42.7.11.jar!/:42.7.11]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.11.jar!/:42.7.11]
