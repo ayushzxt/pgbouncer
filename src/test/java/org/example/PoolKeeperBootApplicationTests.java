@@ -48,11 +48,11 @@ class PoolKeeperBootApplicationTests {
                 + "email VARCHAR(150), department VARCHAR(50), dbname VARCHAR(50), created_at TIMESTAMP)").update();
         reporting.sql("MERGE INTO employees KEY(id) VALUES (1, 'Alice', 'a@x', 'Eng', 'reportingdb', NOW())").update();
 
-        var rows = employeeController.employees("reporting-db");
+        var rows = employeeController.employees("reporting-db", 0);
         assertThat(rows).hasSize(1);
         assertThat(rows.get(0).get("DBNAME")).isEqualTo("reportingdb");
 
-        assertThatThrownBy(() -> employeeController.employees("nope"))
+        assertThatThrownBy(() -> employeeController.employees("nope", 0))
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining("nope");
     }

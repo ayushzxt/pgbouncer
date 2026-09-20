@@ -1,38 +1,24 @@
-# Every entry under app.datasources becomes a HikariDataSource bean named
-# after its key. Keys are HikariCP property names (kebab-case), so every
-# Hikari setting is available; unknown keys fail startup.
+# Single database. Every entry under app.datasources becomes a DataSource bean named
+# after its key. Keys are HikariCP property names (kebab-case), so every Hikari
+# setting is available; unknown keys fail startup.
 # Driver-specific settings go under data-source-properties.
 # Secrets: use ${ENV_VAR} or ${ENV_VAR:default}.
 # The pool key is also the name accepted by GET /api/{dbName}/employees.
 app:
-  # Optional: marks one pool @Primary so Boot's single-DataSource
-  # auto-config (JdbcTemplate, JdbcClient, transactions) targets it.
-  primary-datasource: hikaricp-1
+  # hikari = pooled (HikariCP). none = a new physical connection per request,
+  # i.e. no pooling at all, for benchmarking raw PostgreSQL connection cost.
+  pooling: ${APP_POOLING:hikari}
+  # Marks the pool @Primary so Boot's single-DataSource auto-config
+  # (JdbcTemplate, JdbcClient, transactions) targets it.
+  primary-datasource: appdb
   datasources:
-    hikaricp-1:
-      jdbc-url: jdbc:postgresql://localhost:5432/hikaricp-1
-      username: ${DB_USERNAME:postgres}
-      password: ${DB_PASSWORD:root}
-      maximum-pool-size: 5
-      minimum-idle: 5
-    hikaricp-2:
-      jdbc-url: jdbc:postgresql://localhost:5432/hikaricp-2
-      username: ${DB_USERNAME:postgres}
-      password: ${DB_PASSWORD:root}
-      maximum-pool-size: 5
-      minimum-idle: 5
-    hikaricp-3:
-      jdbc-url: jdbc:postgresql://localhost:5432/hikaricp-3
-      username: ${DB_USERNAME:postgres}
-      password: ${DB_PASSWORD:root}
-      maximum-pool-size: 5
-      minimum-idle: 5
-    dbfour:
-      jdbc-url: jdbc:postgresql://localhost:5432/dbfour
-      username: ${DB_USERNAME:postgres}
-      password: ${DB_PASSWORD:root}
-      maximum-pool-size: 5
-      minimum-idle: 5
+    appdb:
+      jdbc-url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:appdb}
+      username: ${DB_USERNAME:appuser}
+      password: ${DB_PASSWORD:apppass}
+      maximum-pool-size: ${HIKARI_MAX_POOL:10}
+      minimum-idle: ${HIKARI_MIN_IDLE:2}
+      connection-timeout: ${HIKARI_CONNECTION_TIMEOUT:10000}
 
 management:
   endpoints:
@@ -42,5 +28,3 @@ management:
   endpoint:
     health:
       show-details: always
-
-spring.profiles.active: pgbouncer

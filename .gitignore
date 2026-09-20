@@ -39,3 +39,9 @@ pgbouncer/userlist.txt
 # Local env overrides
 .env
 application-local.yml
+
+# Benchmark: Python bytecode, and the raw per-instance JVM logs (the unpooled run
+# alone writes ~75MB of stack traces). Distilled failure evidence is committed
+# under benchmark/results/evidence/ instead.
+__pycache__/
+benchmark/results/logs/
