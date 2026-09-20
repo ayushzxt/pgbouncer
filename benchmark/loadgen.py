@@ -50,6 +50,11 @@ class Worker(threading.Thread):
             return f"{status}:timeout"
         if "FATAL" in text:
             return f"{status}:postgres-fatal"
+        # Spring reports only the top-level exception message, so a database refusal
+        # arrives as this rather than the underlying FATAL. The specific cause is in
+        # the application log; see benchmark/results/evidence/.
+        if "Failed to obtain JDBC Connection" in text:
+            return f"{status}:could-not-get-connection"
         return f"{status}:other"
 
     def run(self):

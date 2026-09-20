@@ -117,10 +117,10 @@ def backends_chart(path, rows):
            label="connections the app wants at peak load", zorder=3)
     ax.bar([x + width / 2 + 0.01 for x in xs], actual, width, color=SERIES[0],
            label="real PostgreSQL backends used (max observed)", zorder=3)
-    ax.axhline(PG_CEILING, color=CRITICAL, linewidth=1.2, zorder=4)
-    ax.text(-0.45, PG_CEILING + max(demand) * 0.02,
-            f"PostgreSQL ceiling for the app role = {PG_CEILING}",
-            color=CRITICAL, fontsize=9, ha="left", va="bottom", fontweight="600")
+    # The ceiling is named in the legend rather than annotated inline: at this bar
+    # density every inline position collides with a bar.
+    ceiling_line = ax.axhline(PG_CEILING, color=CRITICAL, linewidth=1.2, zorder=4,
+                              label=f"PostgreSQL ceiling for the app role ({PG_CEILING})")
 
     for x, v in zip(xs, demand):
         ax.text(x - width / 2 - 0.01, v + 2, str(v), color=SERIES[1], fontsize=8.5,
@@ -130,13 +130,14 @@ def backends_chart(path, rows):
                 ha="center", fontweight="600")
 
     ax.set_xticks(list(xs))
-    ax.set_xticklabels([r[0] for r in rows], fontsize=8.5)
+    ax.set_xticklabels([r[0] for r in rows], fontsize=8)
     style(ax, "PgBouncer decouples what the app asks for from what the database holds",
           "At 200 concurrent clients. Demand is instances × Hikari pool; with no pool it is one "
           "connection per in-flight request.",
           "", "connections")
-    ax.set_ylim(0, max(demand) * 1.18)
-    leg = ax.legend(frameon=False, fontsize=9, loc="upper left")
+    ax.set_ylim(0, max(demand) * 1.12)
+    leg = ax.legend(frameon=False, fontsize=9, loc="upper left",
+                    bbox_to_anchor=(0, -0.13), ncol=3)
     for text in leg.get_texts():
         text.set_color(INK_2)
     fig.tight_layout()
@@ -159,7 +160,7 @@ def main():
     def m_p95(lv):
         return lv["latency_ms"].get("p95", 0)
 
-    # --- 1 & 2: single instance, no pool vs Hikari sizes -------------------
+    # --- 1: pool size sets throughput; no pool throws it away --------------
     single = [
         ("no pool", runs.get("S1-direct-noPool-1inst")),
         ("Hikari 10 (< 20)", runs.get("S2-hikari10-1inst")),
@@ -169,47 +170,38 @@ def main():
     single = [(l, r) for l, r in single if r]
     if single:
         line_chart(os.path.join(CHARTS, "01-throughput-single-instance.png"), single,
-                   "Pooling is what turns concurrency into throughput",
-                   "One app instance. Successful requests only — failures excluded.",
+                   "Pool size sets throughput — up to the database's ceiling, not past it",
+                   "One app instance. Successful requests only. Pools of 20 and 40 land on the "
+                   "same line: PostgreSQL allows 20 either way.",
                    "successful requests / sec", m_success)
-        line_chart(os.path.join(CHARTS, "02-errors-single-instance.png"), single,
-                   "Without a pool, the database starts refusing work almost immediately",
-                   "One app instance. Share of requests that failed.",
-                   "failed requests (%)", m_err, percent=True)
 
-    # --- 3: four instances, with and without PgBouncer ---------------------
-    multi = [
-        ("Hikari 10 ×4", runs.get("S2-hikari10-4inst")),
-        ("Hikari 20 ×4", runs.get("S2-hikari20-4inst")),
-        ("Hikari 40 ×4", runs.get("S2-hikari40-4inst")),
-    ]
-    multi = [(l, r) for l, r in multi if r]
-    if multi:
-        line_chart(os.path.join(CHARTS, "03-errors-4instances-nopgbouncer.png"), multi,
-                   "Four instances without PgBouncer: every pool size oversubscribes the database",
-                   "4 app instances straight to PostgreSQL. Demand is 40 / 80 / 160 against a ceiling of 20.",
-                   "failed requests (%)", m_err, percent=True)
-
-    multi_pgb = [
-        ("Hikari 10 ×4", runs.get("S3-hikari10-4inst-pgb20")),
-        ("Hikari 20 ×4", runs.get("S3-hikari20-4inst-pgb20")),
-        ("Hikari 40 ×4", runs.get("S3-hikari40-4inst-pgb20")),
-    ]
-    multi_pgb = [(l, r) for l, r in multi_pgb if r]
-    if multi_pgb:
-        line_chart(os.path.join(CHARTS, "04-errors-4instances-pgbouncer.png"), multi_pgb,
-                   "Same four instances through PgBouncer",
-                   "Identical load and pool sizes, routed through PgBouncer (transaction pooling, pool 20).",
-                   "failed requests (%)", m_err, percent=True)
-    worst = [(l, r) for l, r in [
-        ("Hikari 40 ×4, direct", runs.get("S2-hikari40-4inst")),
-        ("Hikari 40 ×4, via PgBouncer", runs.get("S3-hikari40-4inst-pgb20")),
+    # --- 2: the only configuration that failed at all ----------------------
+    errs = [(l, r) for l, r in [
+        ("no pool", runs.get("S1-direct-noPool-1inst")),
+        ("HikariCP (all sizes)", runs.get("S2-hikari20-1inst")),
     ] if r]
-    if worst:
-        line_chart(os.path.join(CHARTS, "05-throughput-worst-case.png"), worst,
-                   "The most oversubscribed case: 160 wanted connections, 20 available",
-                   "4 instances × Hikari pool 40. Successful requests only.",
-                   "successful requests / sec", m_success)
+    if errs:
+        line_chart(os.path.join(CHARTS, "02-errors-single-instance.png"), errs,
+                   "Only the unpooled setup ever failed a request",
+                   "Every pooled run in the whole matrix — all pool sizes, 1 and 4 instances, "
+                   "with and without PgBouncer — recorded 0 failures.",
+                   "failed requests (%)", m_err, percent=True)
+
+    # --- 3: the measured PgBouncer effect: tail latency --------------------
+    # Hikari 20 ×4 and 40 ×4 direct differ by <0.1% (1885.0 vs 1886.6 ms at c=200),
+    # so plotting both would draw one line on top of the other. One line, labelled
+    # for both; the tables carry each separately.
+    tail = [(l, r) for l, r in [
+        ("Hikari 20 and 40 ×4, direct", runs.get("S2-hikari40-4inst")),
+        ("Hikari 20 ×4, PgBouncer", runs.get("S3-hikari20-4inst-pgb20")),
+        ("Hikari 40 ×4, PgBouncer", runs.get("S3-hikari40-4inst-pgb20")),
+    ] if r]
+    if tail:
+        line_chart(os.path.join(CHARTS, "03-tail-latency-4instances.png"), tail,
+                   "What PgBouncer actually bought: tail latency, not throughput",
+                   "4 instances oversubscribing a 20-connection database. Same throughput, same "
+                   "backend count — one shared queue instead of four competing ones.",
+                   "p95 latency (ms)", m_p95)
 
     # --- 6: what the database actually holds -------------------------------
     rows = []
@@ -221,9 +213,9 @@ def main():
         ("Hikari 10\n4 inst", "S2-hikari10-4inst"),
         ("Hikari 20\n4 inst", "S2-hikari20-4inst"),
         ("Hikari 40\n4 inst", "S2-hikari40-4inst"),
-        ("Hikari 40 ×4\n+PgBouncer 20", "S3-hikari40-4inst-pgb20"),
-        ("Hikari 40 ×4\n+PgBouncer 10", "S3-hikari40-4inst-pgb10"),
-        ("Hikari 40 ×4\n+PgBouncer 5", "S3-hikari40-4inst-pgb5"),
+        ("40 ×4 →\nPgB 20", "S3-hikari40-4inst-pgb20"),
+        ("40 ×4 →\nPgB 10", "S3-hikari40-4inst-pgb10"),
+        ("40 ×4 →\nPgB 5", "S3-hikari40-4inst-pgb5"),
     ]:
         r = runs.get(rid)
         if not r:
@@ -232,7 +224,7 @@ def main():
         demand = (r["hikari"] or last["concurrency"]) * r["instances"]
         rows.append((label, demand, last.get("pg_backends_max") or 0))
     if rows:
-        backends_chart(os.path.join(CHARTS, "06-backends-used.png"), rows)
+        backends_chart(os.path.join(CHARTS, "04-backends-used.png"), rows)
 
     # --- 7: PgBouncer pool sweep -------------------------------------------
     sweep = [
@@ -242,14 +234,11 @@ def main():
     ]
     sweep = [(l, r) for l, r in sweep if r]
     if sweep:
-        line_chart(os.path.join(CHARTS, "07-pgbouncer-pool-sweep.png"), sweep,
-                   "PgBouncer's own pool size is the throughput knob",
-                   "4 instances × Hikari 40 (160 client connections) through PgBouncer pools of 5, 10 and 20.",
+        line_chart(os.path.join(CHARTS, "05-pgbouncer-pool-sweep.png"), sweep,
+                   "Once PgBouncer is in the path, its pool size is the real throughput limit",
+                   "4 instances × Hikari 40 (160 client connections). Hikari's own size stops "
+                   "mattering — throughput tracks the PgBouncer pool exactly.",
                    "successful requests / sec", m_success)
-        line_chart(os.path.join(CHARTS, "08-pgbouncer-pool-sweep-latency.png"), sweep,
-                   "…and the latency cost of setting it too small",
-                   "Same runs: a smaller proxy pool means more queueing inside PgBouncer.",
-                   "p95 latency (ms)", m_p95)
 
     write_tables(data, runs)
 
